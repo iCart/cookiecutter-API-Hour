@@ -1,0 +1,10 @@
+[Unit]
+Description={{cookiecutter.app_name}}
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/{{cookiecutter.app_name}}/pyvenv/bin/api_hour --config_dir=/etc/{{cookiecutter.app_name}} -ac --chdir=/opt/{{cookiecutter.app_name}}  {{cookiecutter.app_name}}:Container
+
+[Install]
+WantedBy=multi-user.target
