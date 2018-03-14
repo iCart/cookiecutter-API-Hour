@@ -2,7 +2,6 @@ import logging
 import asyncio
 
 import aiohttp.web
-import psycopg2.extras
 
 import api_hour
 
