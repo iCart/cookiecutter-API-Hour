@@ -2,7 +2,6 @@ import logging
 import asyncio
 
 import aiohttp.web
-import aiopg
 import psycopg2.extras
 
 import api_hour
@@ -44,30 +43,14 @@ class Container(api_hour.Container):
     async def start(self):
         await super().start()
         LOG.info('Starting engines...')
-        # Add your custom engines here, example with PostgreSQL:
-        self.engines['pg'] = self.loop.create_task(aiopg.create_pool(host=self.config['engines']['pg']['host'],
-                                                                     port=int(self.config['engines']['pg']['port']),
-                                                                     sslmode='disable',
-                                                                     dbname=self.config['engines']['pg']['dbname'],
-                                                                     user=self.config['engines']['pg']['user'],
-                                                                     password=self.config['engines']['pg']['password'],
-                                                                     cursor_factory=psycopg2.extras.RealDictCursor,
-                                                                     minsize=int(self.config['engines']['pg']['minsize']),
-                                                                     maxsize=int(self.config['engines']['pg']['maxsize']),
-                                                                     loop=self.loop))
-        await asyncio.wait([self.engines['pg']], return_when=asyncio.ALL_COMPLETED)
-
+        # Add your custom engines here:
+        pass
         LOG.info('All engines ready !')
 
 
     async def stop(self):
         LOG.info('Stopping engines...')
-        # Add your custom end here, example with PostgreSQL:
-        if 'pg' in self.engines:
-            if self.engines['pg'].done():
-                self.engines['pg'].result().terminate()
-                await self.engines['pg'].result().wait_closed()
-            else:
-                await self.engines['pg'].cancel()
+        # Add your custom end here:
+        pass
         LOG.info('All engines stopped !')
         await super().stop()
