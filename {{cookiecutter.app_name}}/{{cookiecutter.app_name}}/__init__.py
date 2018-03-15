@@ -34,7 +34,6 @@ class Container(api_hour.Container):
         # This coroutine is used by api_hour command line to have the list of handlers
         handlers = {}
         handler = self.servers['http'].make_handler(logger=self.worker.log,
-                                                    keep_alive=self.worker.cfg.keepalive,
                                                     access_log=self.worker.log.access_log)
         for sock in sockets:
             srv = await self.loop.create_server(handler, sock=sock.sock)
